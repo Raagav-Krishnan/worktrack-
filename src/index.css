@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#f0eef5] font-sans text-gray-700 antialiased;
+    margin: 0;
+  }
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/20 backdrop-blur-xl border border-white/30 shadow-glass;
+  }
+  .glass-card {
+    @apply glass rounded-2xl;
+  }
+  .neo {
+    @apply shadow-neo rounded-2xl bg-[#f0eef5];
+  }
+  .neo-sm {
+    @apply shadow-neo-sm rounded-xl bg-[#f0eef5];
+  }
+  .neo-inset {
+    @apply shadow-neo-inset rounded-xl bg-[#f0eef5];
+  }
+  .neo-button {
+    @apply neo-sm px-6 py-3 font-medium transition-all duration-200 cursor-pointer select-none;
+  }
+  .neo-button:active {
+    @apply shadow-neo-inset;
+  }
+  .neo-toggle {
+    @apply relative w-12 h-6 rounded-full cursor-pointer transition-all duration-300;
+    @apply shadow-neo-sm bg-[#f0eef5];
+  }
+  .neo-toggle.active {
+    @apply shadow-neo-inset;
+  }
+  .neo-toggle-knob {
+    @apply absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-all duration-300;
+    @apply shadow-sm;
+  }
+  .neo-toggle.active .neo-toggle-knob {
+    @apply translate-x-6 bg-soft-teal;
+  }
+}
+
+.rbc-calendar {
+  @apply font-sans;
+}
+.rbc-header {
+  @apply text-sm font-medium text-gray-500 py-2;
+}
+.rbc-event {
+  @apply rounded-lg px-2 text-sm font-medium;
+}
+.rbc-today {
+  @apply bg-soft-indigo/10;
+}
+.rbc-off-range-bg {
+  @apply bg-gray-100/50;
+}
+.rbc-day-bg + .rbc-day-bg {
+  @apply border-gray-200;
+}
+.rbc-month-row + .rbc-month-row {
+  @apply border-gray-200;
+}
