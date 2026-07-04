@@ -51,7 +51,7 @@ export default function WorkCard({ work, onCheckIn }: WorkCardProps) {
       <div className="flex items-start justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-700">{work.name}</h3>
-          <p className="text-xs text-gray-400">{work.startTime} • {work.bufferMinutes}min buffer</p>
+          <p className="text-xs text-gray-400">{work.startTime} - {work.endTime} • {work.bufferMinutes}min buffer</p>
         </div>
         <StatusBadge status={todayStatus} />
       </div>

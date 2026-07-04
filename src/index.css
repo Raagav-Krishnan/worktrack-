@@ -1,12 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(30px, 50px); }
+  66% { transform: translate(-20px, 20px); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bg-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes shimmer-text {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes glass-shine {
+  from { transform: translateX(-100%) skewX(-15deg); }
+  to { transform: translateX(200%) skewX(-15deg); }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-delayed { animation: float 6s ease-in-out infinite; animation-delay: -3s; }
+.animate-blob { animation: float-slow 20s infinite alternate; transition: transform 0.1s ease-out; }
+.fade-in-up { animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+
 @layer base {
   body {
-    @apply bg-[#f0eef5] font-sans text-gray-700 antialiased;
+    @apply bg-surface font-sans text-on-surface antialiased;
     margin: 0;
   }
   #root {
@@ -15,40 +45,101 @@
 }
 
 @layer components {
-  .glass {
-    @apply bg-white/20 backdrop-blur-xl border border-white/30 shadow-glass;
+  .neumorphic-raised {
+    background: #4648d4;
+    box-shadow: 6px 6px 12px rgba(70, 72, 212, 0.3),
+                -4px -4px 8px rgba(255, 255, 255, 0.2);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cta-magnetic:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 12px 12px 24px rgba(70, 72, 212, 0.4),
+                -8px -8px 16px rgba(255, 255, 255, 0.3);
+  }
+  .neumorphic-inset-badge {
+    background: #f9f9ff;
+    box-shadow: inset 2px 2px 5px rgba(18, 28, 42, 0.05),
+                inset -2px -2px 5px rgba(255, 255, 255, 0.8),
+                2px 2px 5px rgba(18, 28, 42, 0.02);
   }
   .glass-card {
-    @apply glass rounded-2xl;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
   }
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: translateX(-100%) skewX(-15deg);
+    z-index: 5;
+    pointer-events: none;
+  }
+  .glass-card:hover::before {
+    animation: glass-shine 1s ease-in-out;
+  }
+  .animated-bg {
+    background: linear-gradient(-45deg, #f3f4ff, #eef2ff, #ffffff, #f9f9ff);
+    background-size: 400% 400%;
+    animation: bg-gradient 15s ease infinite;
+  }
+  .text-shimmer {
+    background: linear-gradient(90deg, #4648d4 0%, #8183ff 25%, #4648d4 50%, #8183ff 75%, #4648d4 100%);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer-text 4s linear infinite;
+  }
+
   .neo {
-    @apply shadow-neo rounded-2xl bg-[#f0eef5];
+    @apply shadow-neo rounded-2xl;
+    background: #f9f9ff;
   }
   .neo-sm {
-    @apply shadow-neo-sm rounded-xl bg-[#f0eef5];
+    @apply shadow-neo-sm rounded-xl;
+    background: #f9f9ff;
   }
   .neo-inset {
-    @apply shadow-neo-inset rounded-xl bg-[#f0eef5];
+    box-shadow: inset 2px 2px 5px rgba(18, 28, 42, 0.05),
+                inset -2px -2px 5px rgba(255, 255, 255, 0.8),
+                2px 2px 5px rgba(18, 28, 42, 0.02);
+    @apply rounded-xl;
+    background: #f9f9ff;
   }
   .neo-button {
     @apply neo-sm px-6 py-3 font-medium transition-all duration-200 cursor-pointer select-none;
   }
   .neo-button:active {
-    @apply shadow-neo-inset;
+    box-shadow: inset 2px 2px 5px rgba(18, 28, 42, 0.05),
+                inset -2px -2px 5px rgba(255, 255, 255, 0.8),
+                2px 2px 5px rgba(18, 28, 42, 0.02);
   }
   .neo-toggle {
     @apply relative w-12 h-6 rounded-full cursor-pointer transition-all duration-300;
-    @apply shadow-neo-sm bg-[#f0eef5];
+    box-shadow: 3px 3px 8px rgba(174, 174, 192, 0.3), -3px -3px 8px rgba(255, 255, 255, 0.8);
+    background: #f9f9ff;
   }
   .neo-toggle.active {
-    @apply shadow-neo-inset;
+    box-shadow: inset 2px 2px 5px rgba(18, 28, 42, 0.05),
+                inset -2px -2px 5px rgba(255, 255, 255, 0.8),
+                2px 2px 5px rgba(18, 28, 42, 0.02);
   }
   .neo-toggle-knob {
     @apply absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-all duration-300;
     @apply shadow-sm;
   }
   .neo-toggle.active .neo-toggle-knob {
-    @apply translate-x-6 bg-soft-teal;
+    @apply translate-x-6;
+    background: #4648d4;
   }
 }
 
@@ -56,20 +147,20 @@
   @apply font-sans;
 }
 .rbc-header {
-  @apply text-sm font-medium text-gray-500 py-2;
+  @apply text-sm font-medium text-secondary py-2;
 }
 .rbc-event {
   @apply rounded-lg px-2 text-sm font-medium;
 }
 .rbc-today {
-  @apply bg-soft-indigo/10;
+  @apply bg-primary-fixed/10;
 }
 .rbc-off-range-bg {
-  @apply bg-gray-100/50;
+  @apply bg-surface-container-low/50;
 }
 .rbc-day-bg + .rbc-day-bg {
-  @apply border-gray-200;
+  @apply border-outline-variant;
 }
 .rbc-month-row + .rbc-month-row {
-  @apply border-gray-200;
+  @apply border-outline-variant;
 }

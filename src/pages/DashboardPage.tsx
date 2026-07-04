@@ -72,7 +72,7 @@ export default function DashboardPage() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #e8e5f0 0%, #f0eef5 50%, #e5eef0 100%)' }}>
+    <div className="min-h-screen animated-bg">
       <div className="max-w-6xl mx-auto px-4 py-6">
         <header className="flex items-center justify-between mb-8">
           <div>

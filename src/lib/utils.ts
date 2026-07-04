@@ -91,12 +91,12 @@ export function isWithinCheckInWindow(
 }
 
 export function checkScheduleCollision(
-  newWork: { startTime: string; bufferMinutes: number; recurrenceDays: DayOfWeek[] },
+  newWork: { startTime: string; endTime: string; bufferMinutes: number; recurrenceDays: DayOfWeek[] },
   existingWorks: Work[],
   excludeWorkId?: string
 ): Work | null {
   const newStart = newWork.startTime;
-  const newEnd = addMinutes(newStart, newWork.bufferMinutes);
+  const newEnd = newWork.endTime;
 
   for (const work of existingWorks) {
     if (excludeWorkId && work.id === excludeWorkId) continue;
@@ -105,7 +105,7 @@ export function checkScheduleCollision(
     if (!hasCommonDay) continue;
 
     const existingStart = work.startTime;
-    const existingEnd = addMinutes(work.startTime, work.bufferMinutes);
+    const existingEnd = work.endTime;
 
     if (timeRangesOverlap(newStart, newEnd, existingStart, existingEnd)) {
       return work;

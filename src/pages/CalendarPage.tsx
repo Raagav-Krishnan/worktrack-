@@ -89,10 +89,10 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #e8e5f0 0%, #f0eef5 50%, #e5eef0 100%)' }}>
+    <div className="min-h-screen animated-bg">
       <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-6">
-          <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600">
+          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600">
             <ArrowLeft size={16} /> Back
           </button>
           <NeoButton onClick={() => navigate('/work/new')} accent className="text-xs">

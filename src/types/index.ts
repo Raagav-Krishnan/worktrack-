@@ -10,6 +10,7 @@ export interface Work {
   name: string;
   monthlySalary: number;
   startTime: string; // HH:mm
+  endTime: string; // HH:mm
   bufferMinutes: number;
   recurrenceDays: DayOfWeek[];
   qrCodeUrl: string;

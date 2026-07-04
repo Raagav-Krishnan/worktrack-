@@ -84,6 +84,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
     setLoading(true);
 
+    let loaded = 0;
+    const onLoaded = () => {
+      loaded++;
+      if (loaded === 4) setLoading(false);
+    };
+
     const worksQ = query(
       collection(db, 'works'),
       where('userId', '==', user.uid),
@@ -91,6 +97,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     );
     const unsubWorks = onSnapshot(worksQ, (snap) => {
       setWorks(snap.docs.map((d) => ({ id: d.id, ...d.data() } as Work)));
+      onLoaded();
     });
 
     const attendanceQ = query(
@@ -100,6 +107,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     );
     const unsubAtt = onSnapshot(attendanceQ, (snap) => {
       setAttendance(snap.docs.map((d) => ({ id: d.id, ...d.data() } as AttendanceRecord)));
+      onLoaded();
     });
 
     const sundayQ = query(
@@ -108,6 +116,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     );
     const unsubSun = onSnapshot(sundayQ, (snap) => {
       setSundayToggles(snap.docs.map((d) => ({ id: d.id, ...d.data() } as unknown as SundayToggle)));
+      onLoaded();
     });
 
     const leaveQ = query(
@@ -116,6 +125,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     );
     const unsubLeave = onSnapshot(leaveQ, (snap) => {
       setLeaveLetters(snap.docs.map((d) => ({ id: d.id, ...d.data() } as unknown as LeaveLetter)));
+      onLoaded();
     });
 
     return () => {

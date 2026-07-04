@@ -30,6 +30,7 @@ export default function AddWorkPage() {
   const [name, setName] = useState(existingWork?.name || '');
   const [salary, setSalary] = useState(String(existingWork?.monthlySalary || ''));
   const [startTime, setStartTime] = useState(existingWork?.startTime || '09:00');
+  const [endTime, setEndTime] = useState(existingWork?.endTime || '18:00');
   const [buffer, setBuffer] = useState(existingWork?.bufferMinutes || 15);
   const [days, setDays] = useState<DayOfWeek[]>(existingWork?.recurrenceDays || []);
   const [collision, setCollision] = useState<Work | null>(null);
@@ -45,12 +46,12 @@ export default function AddWorkPage() {
       return;
     }
     const conflict = checkScheduleCollision(
-      { startTime, bufferMinutes: buffer, recurrenceDays: days },
+      { startTime, endTime, bufferMinutes: buffer, recurrenceDays: days },
       works,
       id
     );
     setCollision(conflict);
-  }, [startTime, buffer, days, works, id, name]);
+  }, [startTime, endTime, buffer, days, works, id, name]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +64,7 @@ export default function AddWorkPage() {
           name,
           monthlySalary: Number(salary),
           startTime,
+          endTime,
           bufferMinutes: buffer,
           recurrenceDays: days,
         });
@@ -71,11 +73,12 @@ export default function AddWorkPage() {
           name,
           monthlySalary: Number(salary),
           startTime,
+          endTime,
           bufferMinutes: buffer,
           recurrenceDays: days,
         });
       }
-      navigate('/');
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
     }
@@ -85,9 +88,9 @@ export default function AddWorkPage() {
   const previewDayRate = salary ? getDayRate(Number(salary), new Date().getFullYear(), new Date().getMonth()) : 0;
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #e8e5f0 0%, #f0eef5 50%, #e5eef0 100%)' }}>
+    <div className="min-h-screen animated-bg">
       <div className="max-w-lg mx-auto px-4 py-6">
-        <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 mb-6">
+        <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 mb-6">
           <ArrowLeft size={16} /> Back
         </button>
 
@@ -108,7 +111,14 @@ export default function AddWorkPage() {
               </div>
             )}
 
-            <NeoInput label="Start Time" type="time" value={startTime} onChange={setStartTime} />
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <NeoInput label="Start Time" type="time" value={startTime} onChange={setStartTime} />
+              </div>
+              <div className="flex-1">
+                <NeoInput label="End Time" type="time" value={endTime} onChange={setEndTime} />
+              </div>
+            </div>
 
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-medium text-gray-500">Buffer Minutes</label>

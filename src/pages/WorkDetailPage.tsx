@@ -72,7 +72,7 @@ export default function WorkDetailPage() {
 
   if (!work) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #e8e5f0 0%, #f0eef5 50%, #e5eef0 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(-45deg, #f3f4ff, #eef2ff, #ffffff, #f9f9ff)' }}>
         <GlassCard className="text-center p-8">
           <p className="text-gray-400 mb-4">Work not found</p>
           <NeoButton onClick={() => navigate('/')}>Back to Dashboard</NeoButton>
@@ -99,9 +99,9 @@ export default function WorkDetailPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #e8e5f0 0%, #f0eef5 50%, #e5eef0 100%)' }}>
+    <div className="min-h-screen animated-bg">
       <div className="max-w-4xl mx-auto px-4 py-6">
-        <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 mb-6">
+        <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 mb-6">
           <ArrowLeft size={16} /> Back to Dashboard
         </button>
 
@@ -112,13 +112,13 @@ export default function WorkDetailPage() {
                 <div>
                   <h1 className="text-2xl font-semibold text-gray-700">{work.name}</h1>
                   <div className="flex items-center gap-4 mt-2 text-sm text-gray-400">
-                    <span className="flex items-center gap-1"><Clock size={14} /> {work.startTime} ({work.bufferMinutes}min buffer)</span>
+                    <span className="flex items-center gap-1"><Clock size={14} /> {work.startTime} - {work.endTime} ({work.bufferMinutes}min buffer)</span>
                     <span className="flex items-center gap-1"><Calendar size={14} /> {work.recurrenceDays.join(', ')}</span>
                   </div>
                 </div>
                 <div className="flex gap-2">
                   <NeoButton onClick={() => navigate(`/work/edit/${work.id}`)} className="text-xs">Edit</NeoButton>
-                  <NeoButton onClick={async () => { await deleteWork(work.id); navigate('/'); }} className="text-xs text-soft-red">Delete</NeoButton>
+                  <NeoButton onClick={async () => { await deleteWork(work.id); navigate('/dashboard'); }} className="text-xs text-soft-red">Delete</NeoButton>
                 </div>
               </div>
 

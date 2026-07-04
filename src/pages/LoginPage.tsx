@@ -5,11 +5,7 @@ export default function LoginPage() {
   const { signInWithGoogle } = useAuth();
 
   return (
-    <div className="min-h-screen flex items-center justify-center"
-      style={{
-        background: 'linear-gradient(135deg, #e8e5f0 0%, #f0eef5 50%, #e5eef0 100%)'
-      }}
-    >
+    <div className="min-h-screen animated-bg flex items-center justify-center">
       <div className="glass-card p-10 w-full max-w-md mx-4 text-center">
         <div className="mb-8">
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl neo flex items-center justify-center">
